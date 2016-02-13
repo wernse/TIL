@@ -1,0 +1,16 @@
+When dealing with too many CTA such as:
+
+ProductID | Accuracy | Add | Change | Remove
+
+1. Instead of creating having those 3 buttons repeated for every row.
+This will remove overload of words of the user. Also make it look less crowded.
+Think of something like G-mail where they use icons on the left:
+
+ + | ^ | x | ProductID | Accuracy
+
+
+
+2. add checkboxes to the left for bulk operations
+
+3. make the options only appear when the user hoversover the row,
+this is good since the user has already showed an interest in that row. 
