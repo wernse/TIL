@@ -1,0 +1,7 @@
+The purpose of modularity is to easily remove and add components.
+
+A quick test to see if a component is really modularized:
+How quickly can you remove the component from the current project. All of the SCSS/HTML/JS
+
+For example: 
+If you added the scss to another component's scss file then it would be hard to remove unless two namespaces are used. In which case it would be better to have two seperate files anyways. Also this way it is easier to add that component to another project.
