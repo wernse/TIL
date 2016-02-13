@@ -1,0 +1,8 @@
+Always create layers when creating d3.
+
+Since d3 works with svgs, they layer ontop of each other.
+This causes problems when trying to work with multiple elements and removal/addition of elements.
+The newest element is created as the latest/initial? element that is the very top element.
+
+Creating layer elements and appending the layers on in the right order solves this.
+Add elements to each layer element as needed.
