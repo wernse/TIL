@@ -1,0 +1,9 @@
+A configuration file is good for secret keys, IPs and global inits such as session vars needed across files
+
+
+var db = {}
+db.ip = xxxxx
+
+module.exports = {
+	db : db
+}

@@ -1,0 +1,49 @@
+Seperate different APIs into different files.
+
+This can be done by creating a closure using 
+
+
+//examples.js
+exports.example = function (req,res){
+	//do stuff
+}
+
+//main.js
+var api = require('./example')
+app.post('/api/example', api.example);
+
+Also create a class that has common methods. 
+This allows reduced code and DRY.
+
+//httpFunc.js
+module.exports = {
+	httpCall:httpCall,
+}
+function httpCall (path, postContent,callback) {
+	var options = {
+		host: config.ip
+		port: config.port,
+		path: path,
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': Buffer.byteLength(postContent)
+		}
+	};
+
+	var initialbody = ''
+	var initialreq = http.request(options, function(res) {
+		res.setEncoding('utf8')
+		res.on('data', function (chunk) {
+			initialbody += chunk
+		});
+		res.on('end', function () {
+			callback(null,initialbody)
+		})
+	})
+	initialreq.on('error', function(e) {
+		console.log('problem with request: ' + e.message);
+	});
+	initialreq.write(postContent);
+	initialreq.end();
+}
