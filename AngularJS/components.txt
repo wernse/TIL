@@ -1,0 +1,7 @@
+Data that does not belong to the component should not be modified in the component.
+The component should call a method showing the intention from the controller e.g. Delete/Add.
+This allows us to see where the data is being altered instead of having random alterations within the component's controller.
+
+The problem is that over time, as the application grows, this kind of state mutation destroys our ability to figure out what's going on.
+We get into situations where data is changing and we don't know why. The change could be made by some code we wrote 
+last year, four scopes down, but there is nothing in the code that we're looking at to remind us about it.

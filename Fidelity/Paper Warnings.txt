@@ -1,0 +1,10 @@
+People often change their mind when they see the built/functioning version of the product.
+This causes us to have to rebuild/redesign things from the agreed paper prototype.
+
+I can see why rapid interactive prototyping tools are usful
+ -give the user an interactive but limited feel
+This is often enough for the user to be happy with the final product but other problems may occur
+when there is extended freedom(e.g more search categories)
+
+Paper is good for inital design and feel
+Interactive is good for use/feel or certain elements/pages
