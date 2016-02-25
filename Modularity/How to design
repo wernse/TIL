@@ -1,0 +1,22 @@
+It is important to create functions/code that is re-useable
+
+This is the reason why angular is good, it creates re-useable html
+
+Create directives that use repetitive html so when you change one class you dont
+have to change it in 4 different places
+e.g. metric tiles, better to change the html in one place rather than 4 places
+
+Create factories(classes) that are able to be reused
+rather than creating a factory thats designed for one specific directive
+then having to include that same factory(with obsolete code) in another directive
+
+
+
+E.g. for highcharts its best to create functions that will take in a specific input
+then you create customized functions that transform to that specific input.
+this allows for greater code re-useablity for when creating the options
+
+
+This is also why scss recommends creating css classes that can be reused 
+e.g. lg-btn rather than moreInfoButton
+
