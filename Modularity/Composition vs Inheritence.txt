@@ -1,0 +1,8 @@
+unaware of the specific types of objects they use, as long as the object implements the API
+unaware of the implementation, only know about the object that defined the interface
+
+subclass coupled with the implementation of its parent class,
+any parent class changes will change the subclass
+
+inheritance is good when adding functionality to existing components,
+reusing most of the old code and adding relatively small amounts of new code.

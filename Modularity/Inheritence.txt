@@ -1,0 +1,36 @@
+Create a duck superclass,
+Has quack, display.
+
+Three subclasses that inherit, they override display
+They want to add a fly method to the superclass to prevent code redundancy.
+However third subclass doesnt fly or quack, need to override the fly and quack method in that class.
+
+This is bad because for every new subclass of duck that doesnt fly, would need to override fly all the time.
+
+Identify what aspects will vary and "encapsulate" it so later you can alter these without affecting
+code that doesnt change. =fewer unintended effects when code changes
+e.g. fly and quack varies across ducks. While display is constant.
+pull them out of the duck class and put in diff class. prevents overriding
+
+Code with behaviours in mind rather than specific implementation code
+E.g. a flyBehaviour interface and two different classes that implement fly()
+FlysWithWings and FlyNoWay
+We were locked in with specific implementation rather than flexibility with behaviours
+The implementation wont be locked into the duck class
+
+APPLICATION->
+Able to use a Interface(factory) that has default methods, Just change the dependency on 
+where it gets the implementation of those methods 
+e.g.
+Fly API
+fly(){
+	flying.fly() vs noFlying.fly()
+}
+
+Different Metrics,
+When <metricTile metric="Sales">
+The Sales method will have a different implementation calling metric.getMetric()
+metric.getMetric(){ 
+ return sales.getMetric() vs transactions.getMetric()
+}
+able to use sales.getMetric somewhere else?
