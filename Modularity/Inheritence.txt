@@ -22,10 +22,12 @@ APPLICATION->
 Able to use a Interface(factory) that has default methods, Just change the dependency on 
 where it gets the implementation of those methods 
 e.g.
-Fly API
+###Fly API
+```
 fly(){
 	flying.fly() vs noFlying.fly()
 }
+```
 
 Different Metrics,
 When <metricTile metric="Sales">
