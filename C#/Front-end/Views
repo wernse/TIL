@@ -1,0 +1,2 @@
+Can serve files through the View() method in MVC however since we want to it all clientside
+then we just reference it in the public folder like NODEJS

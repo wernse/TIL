@@ -1,0 +1,27 @@
+ public class PersonController : Controller
+    {
+        [Route("/api/people")]
+        public JsonResult GetPeople()
+        {
+            var people = new List<Person>()
+            {
+                new Person { Id = 1, FirstName = "John", LastName = "Doe" },
+                new Person { Id = 1, FirstName = "Mary", LastName = "Jane" },
+                new Person { Id = 1, FirstName = "Bob", LastName = "Parker" }
+            };
+
+            return Json(people);
+        }
+    }
+    
+Creates a route that returns people. Need to reference a model for this controller
+
+namespace angularJS.Models
+{
+    public class Person
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+}

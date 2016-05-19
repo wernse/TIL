@@ -1,0 +1,31 @@
+Need to add a Controller for every route to handle what the server will do when it rec thats url
+
+Then Right click to add a view
+This will create a file in the view folder correspoding to the same name
+This is how it knows what view it will return
+
+Controllers/RoutesDemoController
+  public class RoutesDemoController : Controller
+    {
+        public ActionResult One()
+        {
+            return View(); //returns "one.cshtml" file
+        }
+    }
+    
+  Views/RoutesDemo/one.cshtml
+  
+
+For Attribute Routing
+      [Route("/")]
+
+public static void RegisterRoutes(RouteCollection routes)
+{
+    routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+    routes.MapMvcAttributeRoutes();
+
+    // ...
+}
+
+

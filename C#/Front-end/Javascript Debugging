@@ -1,0 +1,10 @@
+console.groupCollapsed("debugFunction")
+console.log("nested");
+console.groupEnd();
+
+console.assert(var, "error function")
+
+console.time("testTimer")
+console.timeEnd("testTimer")
+
+console.table(obj)

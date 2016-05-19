@@ -1,0 +1,41 @@
+http://angular-tips.com/blog/2014/04/introduction-to-unit-test-filters/
+
+Filters are injected using nameFilter where name is the name of the filter.
+e.g. numberFilter == | number
+
+
+var app = angular.module("app", []);
+
+angular.module('app').filter('upper', function () {
+    return function (input, quantity) {
+        if (quantity > 0) {
+            return input.substr(0, quantity).toUpperCase() + input.slice(quantity);
+        } else if (quantity < 0) {
+            return input.substr(0, input.length + quantity) +
+                        input.slice(input.length + quantity).toUpperCase();
+        } else {
+            return input.toUpperCase();
+        }
+    };
+});
+
+describe('Filter: upper', function () {
+    var upperFilter;
+
+    beforeEach(module('app'));
+    beforeEach(inject(function (_upperFilter_) {
+        upperFilter = _upperFilter_;//find the filter and inject
+    }));
+    it('should be able to uppercase an entire input', function () {
+        expect(upperFilter('hello')).toBe('HELLO');
+        expect(upperFilter('hello world')).toBe('HELLO WORLD');
+    });
+    it('can uppercase just the first x characters of an input', function () {
+        expect(upperFilter('hello', 4)).toBe('HELLo');
+        expect(upperFilter('hello world', 5)).toBe('HELLO world');
+    });
+    it('can uppercase the last x characters of an input', function () {
+        expect(upperFilter('hello', -2)).toBe('helLO');
+        expect(upperFilter('hello world', -5)).toBe('hello WORLD');
+    });
+});

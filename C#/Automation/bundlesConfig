@@ -1,0 +1,12 @@
+Can bundle files together into a single file like concat
+Have to include it into the view with 
+
+BundleConfig.js
+     bundles.Add(new ScriptBundle("~/bundles/coreApp")
+        .Include("~/Scripts/app.js")
+        .IncludeDirectory("~/Scripts/Landing","*.js"));
+        BundleTable.EnableOptimizations = true;
+        
+Index.cshtml 
+    @Scripts.Render("~/bundles/AwesomeAngularMVCApp")
+

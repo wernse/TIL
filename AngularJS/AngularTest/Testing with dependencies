@@ -1,0 +1,104 @@
+jasmine spies are like wrappers or an object that tracks whether or not it has be called or not
+    testInject = {
+        test: jasmine.createSpy(),
+        dontTest: jasmine.createSpy()
+    };
+        
+whenever testInject.test is called the spy will know and thus can check if its be called or not
+
+    beforeEach(inject(function (_testFactory_) {
+        testFactory = _testFactory_;
+        spyOn(testFactory, 'testFunction')//.and.callThrough();
+
+    }));
+
+    it('should be calling the testInject.test ', function () {
+        console.log("testFactory")
+        testFactory.testFunction('Hello');
+        expect(testFactory.testFunction).toHaveBeenCalledWith('Hello');
+
+    });
+    
+create spy with callThrough actually calls function in the spy instead of just checking if its called or returned
+the real function is never called, but if you really need to spy it and also call it, you can do it with and.callThrough
+
+1.Create spy on function - wraps actual implementation in an object and tracks func calls
+2.The spy object is called rather than the actual implementation, need to .and.callThrough() to exec it
+3.If we remove the spy object then the actual implementation will be called when we run testFactory.testFunction()
+4.Allows us to mock and not depend on the actual implementation
+5.Can call .and.returnValue(value) to mock the return of the spy, thus removing dependency on the implementation
+
+    testInject = {
+        test: jasmine.createSpy(),
+        dontTest: jasmine.createSpy()
+    };
+1.Creates a mock class with methods, each will return a spy that doesnt have an actual implementation
+2.Allows us to test whether the function was caled or not with looking at implementation
+3.Perfect to use for injecting dependencies on the test class without actually testing the injected class as well
+4.$provide.value('testInject', testInject) creates that variable object so that the actual ['testinject'] class does not get called and you dont have to inject the testinject's dependencies
+
+describe('factory: Logger', function () {
+    var testInject, testFactory;
+
+    beforeEach(module('app', function ($provide) {
+        testInject = {
+            test: jasmine.createSpy(),
+            dontTest: jasmine.createSpy()
+        };
+       
+
+        //$provide.value('testInject', testInject);
+    }));
+
+    beforeEach(inject(function (_testFactory_) {
+        testFactory = _testFactory_;
+        //spyOn(testFactory, 'testFunction');
+
+    }));
+
+    it('should be calling the testInject.test ', function () {
+        console.log("testFactory")
+        var a = testFactory.testFunction('Hello');
+        testInject.test()
+        //expect(testFactory.testFunction).toHaveBeenCalledWith('Hello');
+        expect(testInject.test).toHaveBeenCalled();
+
+    });
+
+    //it('should be calling the testInject.test ', function () {
+    //    console.log("testFactory")
+    //    testFactory.testFunction('Hello');
+    //    expect(testInject.test).toBeDefined();
+    //    expect(testInject.dontTest).toBeDefined();
+    //    //expect(testInject.test).toHaveBeenCalled();
+    //});
+
+
+});
+
+var app = angular.module("app", []);
+
+app.factory('testFactory', ['testInject', function (testInject) {
+    var testFactory = {
+        testFunction: testFunction
+    }
+
+    function testFunction(input) {
+        console.log("call through")
+        testInject.test()
+        
+        return "";
+    }
+    return testFactory;
+}]);
+
+app.factory('testInject', function () {
+    var testInject = {
+        test: test
+    }
+
+    function test(input) {
+        return "";
+    }
+    return testInject;
+});

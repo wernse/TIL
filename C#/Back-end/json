@@ -1,0 +1,3 @@
+http://stackoverflow.com/questions/15413825/how-do-you-add-a-jtoken-to-an-jobject
+three levels to a json
+jobject["key"] -> jproperty.value -> jtoken["key"]

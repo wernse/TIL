@@ -1,0 +1,6 @@
+http://stackoverflow.com/questions/13211277/performance-differences-so-dramatic
+
+List is like a static array, to add to the front of the list it would require you to copy every single list element down one
+A list seems to be a static array. Accessing the list at the front requires memory transfers, that take time in proportion to the list length.
+
+"You already suspected it correctly. Manipulating the beginning of a list, means that the underlying array needs to change. Adding an item usually means that you need to shift all other elements by one, same with removing. If you know that you will be manipulating both ends of a list, you’re better of using a linked list."

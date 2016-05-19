@@ -1,0 +1,13 @@
+Interactor entity model
+The interactor-controller should be the "manager"
+the entity - classes are the workers
+
+Everytime a worker completes their job it should be sent to the manager to then 
+send the job to the next worker rather than workers talking to each other
+this allows us to change the worker if we wanted another functionality without having
+to look through every single worker to see if they were communicating to each other(tightly coupled)
+e.g. swapping out mongodb to sql
+
+Interfaces allow this to happen, Dont have to change the manager's calls everytime the worker changes
+The worker takes a static input and returns a static output
+this is how multiple countries could buil the hubble telescope with just interfaces

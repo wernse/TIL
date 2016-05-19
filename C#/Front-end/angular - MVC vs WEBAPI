@@ -1,0 +1,11 @@
+http://stackoverflow.com/questions/22589245/difference-between-mvc-5-project-and-web-api-project
+http://stackoverflow.com/questions/23076670/asp-net-mvc-5-vs-angularjs-asp-net-webapi
+
+https://www.simple-talk.com/blogs/2013/10/16/angularjs-on-top-of-asp-net-moving-the-mvc-framework-out-to-the-browser/
+When using MVC you have to couple some business logic into the html
+
+These frameworks are JavaScript frameworks that facilitate the clear separation
+of the “frontend” or the data rendering logic from the “backend”
+which is typically just a REST based API that loads and processes data through a resource model.
+
+The frontend should dictate how the data is rendered while backend processes the data

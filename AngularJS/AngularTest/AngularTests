@@ -1,0 +1,53 @@
+http://angular-tips.com/blog/2014/02/introduction-to-unit-test-introduction/
+
+describe('Calculator', function () {
+    var calc;
+
+    beforeEach(function () {
+        calc = new Calculator();
+    });
+
+    describe('Addition', function () {
+        it('should be able to sum 5 and 3 to return 8', function () {
+            var result = calc.addition(5, 3);
+            expect(result).toBe(8);
+        });
+        it('should be able to sum a number with 0', function () {
+            var result = calc.addition(7, 0);
+            expect(result).toBe(7);
+        });
+        it('should be able to sum a negative number with a positive result', function () {
+            var result = calc.addition(7, -3);
+            expect(result).toBe(4);
+        });
+
+        it('should be able to sum a negative number with a negative result', function () {
+            var result = calc.addition(-20, 7);
+            expect(result).toBe(-13);
+        });
+    });
+    describe('division', function () {
+        it('should be able to do a exact division', function () {
+            var result = calc.division(20, 2);
+            expect(result).toBe(10);
+        });
+        it('should throw an exception if we divide by 0', function () {
+            expect(function () {
+                calc.division(5, 0);
+            }).toThrow(new Error('Calculator does not allow division by 0'));
+        });
+    });
+});
+
+function Calculator() {
+}
+
+Calculator.prototype.addition = function(num1, num2) {
+    return num1 + num2;
+};
+Calculator.prototype.division = function (dividend, divisor) {
+    if (divisor === 0) {
+        throw new Error('Calculator does not allow division by 0');
+    }
+    return Math.round(dividend / divisor);
+};

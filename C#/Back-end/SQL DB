@@ -1,0 +1,35 @@
+http://www.ryadel.com/en/asp-net-setup-mvc5-website-mysql-entity-framework-6-code-first-vs2013/
+Right-click appData and add a file, sql database
+Then open and rightclick to create the table
+Add it to the connectionString in web.config
+    <add name="TestDBContext" connectionString="Data Source=|DataDirectory|\test.mdf" providerName="System.Data.SqlServerCe.4.0"/>
+
+Entity framework- a class designed to represent a row
+Create a row model
+public class TestModel
+    {
+        public int ID { get; set; }
+        public string ProductName { get; set; }
+        public float Price { get; set; }
+        public float PreviousPrice { get; set; }
+    }
+    
+The main class who handles and keeps track of the various Entity Framework operations is known as Database Context. 
+Create a table model 
+public class TestDBContext : DbContext
+{
+    public DbSet<TestModel> Items { get; set; }
+}
+
+Create this context obj in the controller. sort of like an obj with keys you can access
+    private TestDBContext db = new TestDBContext();
+    
+Get the db's Item table, with the row specified
+    public ActionResult Index()
+    {
+        return View(db.Items.ToList());
+    }
+    
+SETUP
+Models->ADO.NET Entity Data Model->EF Designer
+
