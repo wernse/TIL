@@ -1,0 +1,31 @@
+no8.find({}, function(err, thisReport) {
+    if (err){
+        console.error(err);
+    }else{
+        thisReport.forEach(function (x) {
+          db.foo.update({_id:x._id}, {$set:{"cow":x.hour}, $unset:{"hour":1}})
+      }) 
+        console.log("done")
+    }
+})
+
+This is the mongoose way to relabel the fields. However it is inefficient as it has to store it in memory then update
+
+Better to use Monogodb and use the rename until mongoose implements rename
+
+var MongoClient = require( 'mongodb' ).MongoClient
+MongoClient.connect(config.db.url, function(err, db) {
+  console.log("Connected correctly to server");
+  var collection = db.collection('no8')
+  collection.update( {}, { $rename: { "Quantitys": "Quantity" }}  , {multi:true}
+    ,function(err, document) {
+    console.log(document);
+  });
+});
+
+
+
+
+1. Upload->MongoImport
+2. MongoClient.rename(upload.map)
+3. use mapped schema to query

@@ -1,0 +1,11 @@
+#Create a dashboard
+
+-Allows the user to login with their details
+-See the data they have already analyzed
+-Reanalyze the data
+
+#Solution
+
+Create logins with passport
+Store csvs with the user account
+If click then retrives and re-analyzes the data

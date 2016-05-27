@@ -102,3 +102,10 @@ app.factory('testInject', function () {
     }
     return testInject;
 });
+
+
+Cant test private methods without exposing them. Should be tested while testing the public method
+  it('it should only init once', function () {
+    spyOn(metricCtrl, 'privateMethod');
+    expect(metricCtrl.privateMethod.calls.count()).toEqual(1);
+  })

@@ -1,0 +1,27 @@
+<h>Two Ways</h>
+
+1.
+docker run --restart=always -p 80:3000 -d wernsen/gittest 
+
+2.
+docker run --name node -p 80:3000 -d wernsen/gittest 
+
+-ubuntu uses 'Upstart'
+-it runs conf files during start and stop.
+
+cd /etc/init
+
+(Create the container first then tell docker to start/stop it)
+
+nano node.conf
+
+description "Node autostart"
+start on filesystem and started docker //if docker is started, start node
+stop on runlevel [!2345]
+respawn
+script
+   /usr/bin/docker start node
+end script
+pre-stop script
+  /usr/bin/docker stop node
+end script

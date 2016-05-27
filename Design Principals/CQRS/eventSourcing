@@ -1,0 +1,6 @@
+http://martinfowler.com/eaaDev/EventSourcing.html
+
+General idea is to alter the data in the database based on events and keeping a log.
+This allows you to easily reverse states and shows how you got to that point.
+e.g. add $10 to account vs set account to 110$. 
+first option you can easily reverse it by $10 however cant in the second.

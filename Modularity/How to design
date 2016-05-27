@@ -1,22 +1,92 @@
 It is important to create functions/code that is re-useable
 
-This is the reason why angular is good, it creates re-useable html
+ANGULARJS
+ -allows re-useable html
 
-Create directives that use repetitive html so when you change one class you dont
-have to change it in 4 different places
-e.g. metric tiles, better to change the html in one place rather than 4 places
+DIRECTIVES
+ -repetitive html so when you change one class you dont have to change it in 4 different places,
+ -DRY principal
+ -e.g. metric tiles, better to change the html in one place rather than 4 places
 
-Create factories(classes) that are able to be reused
-rather than creating a factory thats designed for one specific directive
-then having to include that same factory(with obsolete code) in another directive
+<div class="col-md-3">
+	<metric-tile title-name="Sales" 
+	display-value="${{promotionsInfo.metrics.total_sales.selected | number:2}}" 
+	percentage="{{promotionsInfo.metrics.total_sales.percentageChange |absolute| number:2}}"></metric-tile>
+</div>
+<div class="col-md-3">
+	<metric-tile title-name="No. of Transactions" 
+	display-value="{{promotionsInfo.metrics.total_transactions.selected|number:0}}" 
+	percentage="{{promotionsInfo.metrics.total_transactions.percentageChange |absolute| number:2}}"></metric-tile>
+</div>
 
+vs
 
+<div class="col-md-3">
+	<div class="metricContainer">
+		<div class="metricFocus">Sales</div>
+		<div class="metricFocusVal">
+			<span>s${{promotionsInfo.metrics.total_sales.selected | number:2}}</span>
+			<span>b${{promotionsInfo.metrics.total_sales.base | number:2}}</span>
+		</div>
+		<div>	
+			<i ng-class="promotionsInfo.basketArrow(promotionsInfo.metrics.total_sales.percentageChange)"></i>
+			{{promotionsInfo.metrics.total_sales.percentageChange |absolute| number:2}}%
+		</div>
+	</div>
+</div>
+<div class="col-md-3">
+	<div class="metricContainer">
+		<div class="metricFocus">No. of Transactions</div>
+		<div class="metricFocusVal">
+			<span>s{{promotionsInfo.metrics.total_transactions.selected}}</span>
+			<span><br/>b{{promotionsInfo.metrics.total_transactions.base | number:2}}</span>
 
-E.g. for highcharts its best to create functions that will take in a specific input
-then you create customized functions that transform to that specific input.
-this allows for greater code re-useablity for when creating the options
+		</div>
+		<div>	
+			<i ng-class="promotionsInfo.basketArrow(promotionsInfo.metrics.total_transactions.percentageChange)"></i>
+			{{promotionsInfo.metrics.total_transactions.percentageChange |absolute| number:2}}%
+		</div>
+	</div>
+</div>
+
+FACTORIES
+ Treat factories like classes
+ Create general reusable factories rather than designed for one specific directive
+ -If include a specific directive's factory in another directive then it will have obsolete code
+
+graphOptions =  [
+	{
+		display : 'Sales',
+		actual : 'sales'
+	},
+	{
+		display : 'No. Items',
+		actual : 'number_items'
+	}]
+
+Rather than having to repeat this object in every factory that uses graphs, best to use a reusable factory
+named GraphingFactory and include them into the feature's factory. 
+thus it will be easier to remove/add graphing functionality
+
+angular.factory('highcharts', function(){
+	//public methods
+	var highcharts = {
+		createHighchartsObject: createHighchartsObject
+	}	
+
+	privateFunction = function(){
+	}
+
+	return highcharts
+})
+
+angular.factory('highchartsUser', ['highcharts', function(highcharts){
+	highcharts.createHighchartsObject
+}])
+
 
 
 This is also why scss recommends creating css classes that can be reused 
 e.g. lg-btn rather than moreInfoButton
 
+Have to deal with the trade-off between customization(paramters) and code complexity(deal with different params)

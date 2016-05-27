@@ -1,0 +1,23 @@
+Containers use a shared memory, when they need it they will use it.
+Command to see RAM: free -m
+
+http://stackoverflow.com/questions/26841846/how-to-allocate-50-cpu-resource-to-docker-container
+We can limit the max a container can use with -c. The total amount of cpu shares is 1024
+e.g.
+```
+sudo docker run -c 614 //60%
+sudo docker run -c 410 //40%
+```
+https://goldmann.pl/blog/2014/09/11/resource-management-in-docker/
+Even if there is a limit the container will run at 100% if no other processors are using the memory
+
+If memory runs out think of using Swap space.
+Inactive pages in memory are moved to the swap space if the RAM is full.
+
+With same server Node and OCPU, the tradeoff between data transfer and processing power.
+If there is not enough RAM to handle the OCPU server it will crash.
+Solutions may be:
+-increase RAM
+-introduct swapspace
+-make R functions use less ram by garbage collection
+-One call make take 200MBs of RAM

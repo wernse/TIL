@@ -1,0 +1,19 @@
+-The controller is like a manager, he does not care how/what the results are made. Uses the results to show the customers
+-The factories are like machinery, able to swap them out for different functions/implementations/parts e.g.faster search
+
+Therefore all functionality should be done in machinery and not in the controller
+
+e.g. Factory 
+function getGraph (type, data, filter) {
+	if(type == 'day')
+		return metricsFactory.getDayGraph(data, filter)
+	else if(type == 'time')
+		return metricsFactory.getTimeGraph(data, filter)
+}
+
+Could replace the metricsFactory implementation with something else and the result would be the same
+
+Controller
+ Factory.getGraph(x,x,x)
+
+We do not need to touch the controller code at all even if we need to change the graph implementation to something better

@@ -1,3 +1,4 @@
+Encapsulation
 Data that does not belong to the component should not be modified in the component.
 The component should call a method showing the intention from the controller e.g. Delete/Add.
 This allows us to see where the data is being altered instead of having random alterations within the component's controller.

@@ -1,0 +1,50 @@
+AZURE UBUNTU
+sudo apt-get update
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo nano /etc/apt/sources.list.d/docker.list
+	deb https://apt.dockerproject.org/repo ubuntu-trusty main
+sudo apt-get update
+sudo apt-get install docker-engine -y
+sudo usermod -aG docker azureuser
+exit 	(logout login)
+sudo service docker restart
+docker login --username=wernsen --email=magic_cards9@hotmail.com
+
+
+
+PULL IMAGE, CREATE CONTAINER
+//running the whalesay image with the command "cowsay boo"
+docker run docker/whalesay cowsay boo  
+-output "cowsay boo"
+
+
+CUSTOM DOCKER IMAGE
+nano Dockerfile
+
+1.
+-Just like installing onto a new VM.
+FROM docker/whalesay:latest	
+FROM ubuntu:14.04
+-FROM tells docker base image to start from
+-FROM is the VM image, follow commands are the BAT script that contains all the package commands
+
+RUN apt-get update && apt-get install -y \
+        opencpu \
+		nano
+
+-Using the \, remove the command from the cache so when new packages are added update is re-run
+
+2.
+docker build -t docker-whale .	//This builds an image called 'docker-whale' containing the modules run from the dockerfile
+
+
+PUSH IMAGE
+docker images
+docker tag {{IMAGEID}} {{NAMESPACE}}/{{VALUE}}:latest
+docker tag ocpu wernsen/basketocpu
+docker login --username=wernsen --email=magic_cards9@hotmail.com
+docker push wernsen/basketocpu
+
+1.Docker pull image
+docker login --username=wernsen --email=magic_cards9@hotmail.com
+docker pull wernsen/ocpubase

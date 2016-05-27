@@ -1,0 +1,16 @@
+The purpose is to hide the complexity of the method and sources of change.
+
+-Hide the complexity as in private members, outside methods are not allowed to see how the result was calculated
+-Sources of change as in implementation changes, a change to the implementation of the method should not affect the result of the return values. 
+
++Outer functions do not have access to the method's variables or objects. The data can only be changed within the method/class, this prevents spahgetti code where the data is changed somewhere without you knowing where
++Allows easier testing since it purely relies on a request model as the input and the response model as the output compared to if it was implemented in the callee then .
+
+
+A.K.A able to use an interface without knowing how it was implemented, just pass a value in and get a value back.
+This allows the caller to rely on the interface without knowing how it was implemented. this reduces the coupling between the method's implementation and the callee.
+An interface allows an request/response model to be defined. 
+
+LOOSE COUPLING
+Any module can use the interface if it adhears to the request model.
+Any module can implement the interface if it adhears to the response model.

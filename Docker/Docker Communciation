@@ -1,0 +1,85 @@
+1.
+Start OCPU Docker with port 80:80,need it to link to in step 2
+docker run -it --name ocpu -p 80:8006 wernsen/ocpuloaded /bin/bash
+docker run -it --name ocpu -p 80:8006 wernsen/ocpuloaded /bin/bash
+
+2.
+Start Node Docker with link to OCPU Docker
+docker run -it -p 80:3000 --name node --link ocpu node /bin/bash
+docker run -it --rm -p 80:3000 --name node --link ocpu node /bin/bash
+//-it means that it creates an input process
+//--rm means that it will clean up file system after container exits, e.g dont havev to stop and rm
+//"/bin/bash" specifies the cmd shell it runs
+//-p maps port 80 to 3000, if node listens to port 3000 it works
+//--name tags the container with a name
+
+3.
+Re enter the Docker's shell
+docker attach node		(re-executed the shell)
+
+4.
+/etc/hosts
+When linking with other dockers, the hostname/ip of the container is added to the file
++Allows you to communicate internally on the VM without exposing it to the public
+
+NODE
+*Create a request to the ocpu docker
+//parses the ip address from the host file and makes a mock request
+var request = require('request')
+var fs = require('fs')
+
+fs.readFile('/etc/hosts', 'utf8', function (err, data) {
+  if (err) throw err;
+  console.log(data);
+ regex = /.+?(?=ocpu)/
+ var ip = data.match(regex)[0].match(/.+?(?=\t)/)[0]
+  request('http://'+ip+'/ocpu/library/MASS/scripts/',function (error,response,body){
+   console.log(body)
+})
+});
+
+TO TEST LINK COMMUNICATION 
+nano /etc/hosts
+apt-get install -yqq inetutils-ping
+ping ocpu
+
+sudo apt-get install php5-curl
+curl http://172.17.0.2:8006/ocpu/library/MASS/scripts/
+
+
+NODE JS SETUP
+1. DOCKER INTO AND GIT PULL
+docker run -it --name node wernsen/basenode /bin/bash
+mkdir basketool
+cd basketool 
+git init
+git remote add origin https://github.com/wernse/basketool
+git pull origin fooddocker
+nano config.js
+exit
+docker commit --change='CMD ["npm", "start"]' node  testnode
+docker run -w /basketool -p 80:8080 -d --name basketool --link ocpu testnode
+
+
+*Change the CMD in docker by commiting it to another container
+docker commit node  testping
+docker commit --change='CMD ["npm", "start"]' node  testnode
+
+
+docker run -w /basketool -p 80:8080 -d --name basketool --link ocpu testnode
+//-w sets the working dir to /basketool, where npm start executes
+//without -w it wont change to the correct directory
+// -d runs it as a daemon in the background. e.g. the console isnt blocked
+
+
+1. START OCPU on correct ports and starts, bin is needed for updating. MAPPING THE port with -p 80:8006 works as well but it blocks port 80 and thus the nodejs server cant use it. 
+-Exposing the 8006 port that ocpu listens to seems to work. Can curl call the ip address and it will return
+
+docker run -it --name ocpu --expose 8006 wernsen/ocpuloaded sh -c 'service opencpu restart && /bin/bash'
+
+2.1 TO TEST link ocpu to node container
+docker run -it -p 80:8080  --link ocpu --name basketool testping /bin/bash
+
+curl http://172.17.0.2/ocpu/library/MASS/scripts/
+
+The upload call seems to timeout. consider changing ocpu server conf

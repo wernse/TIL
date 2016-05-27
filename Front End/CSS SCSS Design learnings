@@ -1,0 +1,71 @@
+Add your extra stlyings that wont change to the bootstrap tags, allows you to keep consistency and DRY e.g. encapsulation
+e.g.
+Adding custom button styles, such as background/height. These will be consistent over all your buttons
+
+
+Add seperate classes for things that will change e.g. width
+
+
+.btn-size-one{
+  width: 160px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background: #FFF;
+  font-size: 14px;
+  color: #000;
+  border: 1px solid #000;
+}
+
+.btn-size-two{
+ width: 130px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+ background: #FFF;
+ font-size: 14px;
+ color: #000;
+ border: 1px solid #000;
+ border-radius: 6px;
+}
+
+.btn-size-three{
+ width: 140px;
+ padding-top: 5px;
+ padding-bottom: 5px;
+ background: #F6F6F6;
+ font-size: 14px;
+ color: #000;
+ border: 1px solid #000;
+ border-radius: 6px;
+}
+
+vs 
+.btn{
+ background: #F6F6F6;
+ font-size: 14px;
+ color: #000;
+ border: 1px solid #000;
+ border-radius: 6px;
+}
+.btn-one{
+  width: 160px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.btn-two{
+  width: 140;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+This allows consistent stlying in terms of font-size and background so you dont have to repeat code.
+Also when you need to change the styling of the button its east since all btns will have the btn class.
+
+This is what i learnt when trying to change the initial design to another one. I had to keep changing classes everywhere
+and repeating the styling: Whenever a button length was too long i had to copy paste the existing style with a different width.
+
+This new way will allow me to change the stlying in one place and just add custom class styles to different sets of elements all at the same time.
+
+I'm looking to apply this same principal to containers and titles. These are the most likely to be the same style across all pages.
+For custom elements the stlying will have to be customized for it since the layout will not be the same elsewhere.
+
+This key since the style has to be consistent all across your website to prevent the user from being lost and wondering if its the same website or not. 

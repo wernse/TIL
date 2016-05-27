@@ -1,0 +1,77 @@
+https://www.quora.com/Is-it-true-that-a-good-programmer-uses-fewer-if-conditions-than-an-amateur
+
+Good programmers use fewer IF statements
+
+e.g.
+
+playBtn.on('click', function() { 
+	if (pageNotAnimating && videoPlayer) {
+	  	if(! videoPlayer.loading && ! videoPlayer.ended()) {
+	    	videoPlayer.play();
+	  	} else {
+	       alert('Video can't be played!');
+	    }
+	} else {
+	    alert('Video player not ready!');
+	}
+});
+ 
+pauseBtn.on('click', function() { 
+	if (pageNotAnimating && videoPlayer) {
+	  	if(! videoPlayer.loading && ! videoPlayer.ended()) {
+	    	videoPlayer.pause();
+	  	} else {
+	       alert('Video can't be played!');
+	    }
+	} else {
+	    alert('Video player not ready!');
+	}
+});
+-------- 
+They both use the same equality expressions to check if it can do the command. Thus its good to extra this out to a common method they will use.
+--------
+
+function doCommand(command, errMessage) {
+  if (! videoPlayer.loading() && ! videoPlayer.ended()) {
+     command();
+  } else {
+    alert(errMessage);
+  }
+}
+ 
+btnPlay.on('click', function() {
+  doCommand(videpPlayer.play, 'Can't play video');
+});
+ 
+btnPause.on('click', function() {
+  doCommand(videpPlayer.pause, 'Can't pause video');
+});
+
+--------
+Can change the equality operator to a function that returns the equality operator. 
++This allows you label this function to provide further readability without having to read through the code and be confused.
+--------
+
+function videoCanPlay() {
+   return ! videoPlayer.loading() && ! videoPlayer.ended();
+}
+ 
+function doCommand(command, errMessage) {
+  if (videoCanPlay()) {
+     command();
+  } else {
+    alert(errMessage);
+  }
+}
+
+--------
+Can also use early returns to remove the else statements. It has the same function has the else since it just returns early if its true and doesnt execute the alert
+--------
+
+function doCommand(command, errMessage) {
+  if (videoCanPlay()) {
+     return command();
+  }
+    
+  alert(errMessage);
+}

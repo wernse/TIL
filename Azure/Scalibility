@@ -1,0 +1,12 @@
+auto horizontal scaling only works for PaaS e.g. WebApps.
+WebApp-Connect continuous integration with github -> upload code -> runs automatically.
+Allows you to add more instances with the same code and scale horizontally
+
+manual horizontal scaling for IaaS e.g. VM
+need to implement a load balancer and specify the VMs it should pass balance to. 
+
+Round Robin - distribute load/https requests to a set of VMs
+
+load balancer- a single input endpoint (request in) and multiple output endpoints (request out). for each request it sends it to a machine in a round robin fashion. e.g. can spread multiple http requests to multiple VMs
+Need to register VMs to the load balancer group for it to work and same ports.
+

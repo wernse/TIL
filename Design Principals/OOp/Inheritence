@@ -1,0 +1,17 @@
+"IS-A"
+Inheritence is inheriting the methods of a parent object. 
+
++Allows you to inherit methods that it will have the implement eventually. e.g. a dancer is a person.
++Also allows you to use the a child type where a parent type is used, since the functions that the parent has is implemented in the child. e.g. a person will always have a name, so will a dancer
++Allows you to focus on the new aspects and methods of that child type. Instead of reimplementing getName(), can focus on dance(). This also applies DRY since you dont have to reimplement functions.
+
+-Heavy coupling between the parent and the child types. All the child types rely on the parent type, if the parent changes a method it will affect all the children.
+
+"HAS-A"
+Object Composition is an object that is composed of other functions. 
+
++Allows an object that is purely composed of other objects e.g. a Car can have multiple different objects. A car has a steering wheel but isnt a sterring wheel
++When you have a sorting class, it is bad to make different classes to inherit the same class if they want to run different sorts. they will be locked into one sorting function.
+Better to have an interface, and a mergesort, quicksort class that implements them. The different classes can then use merge and quick respectively.
+
+e.g. two different ways to process graph data. e.g. day vs time. can have both implement an interface with .format(), then each method can use it respectively.  

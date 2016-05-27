@@ -1,0 +1,35 @@
+passportLocalMongoose = require('passport-local-mongoose');
+
+This package salts and hashes the passwords, takes in the username and creates the salt/hash pw
+http://toon.io/on-passportjs-specific-use-cases/
+#Requires sessions to keep user logged in
+app.use(session({
+    secret: 'blahblashasdas', //this is the salt which creates a encryption to ensure the cookie wasnt altered to make their access level higher.
+    maxAge: 2592000000 
+}));
+
+
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.status(500).send('Unauthorized');
+    }
+}
+
+app.post('/register',loginAPI.loggedIn, loginAPI.register);
+requires a user to register else it sends status
+
+
+#Create custom sessions
+passport.serializeUser(function(user, done) {
+	console.log(user)
+	done(null, {
+		id: user["id"],
+		username: user["username"],
+		level: user["level"]
+	});
+});
+
+#req.user on each request, can filter access based on level
+{ id: '571072701f2736577c48d2c4', username: 'test', level: 1 }

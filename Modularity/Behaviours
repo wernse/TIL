@@ -1,0 +1,11 @@
+Design your classes around behaviours rather than specific application/features
+e.g. two places required me to create the same type of graphs
+
+First abstract away the things that will be similar in the whole app.
+Then build a library/class around that functionality.
+Then include that class into the specific features module.
+
+The abstraction can either be done in a factory or a directive. 
+However directive is more strict on what input you need. you need a specific format.
+e.g. Highcharts directive requires an object which has a large amount of nested objects
+specifying what is needed.

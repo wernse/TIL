@@ -1,0 +1,9 @@
+-replacement has length zero
+-invalid multibyte string 42
+
+All due to special chars e.g. e hat
+
+-R process died.
+This could be due to the server not having enough memory.
+Occurs when calling too many functions in parallel that load a large csv into memory. 
+Solution: to limit the amount of calls made at the same time, do them in seq

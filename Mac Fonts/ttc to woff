@@ -1,0 +1,11 @@
+Use a tool called FontForge to convert the TCC to TFF
+
+Then use an online tool to convert TFF to woff then custom import into the css
+https://everythingfonts.com/ttf-to-woff
+f
+@font-face {
+  font-family: medium;
+  src: url('../fonts/lato/AvenirNext-Medium.woff');
+  /*src: url('../fonts/lato/Avenir-Roman.woff');*/
+
+}

@@ -1,0 +1,67 @@
+HashMap(Dictionary, JS Objects)
+	-It uses an array as underlying structure
+	-Uses a function to create hash in order to store in array
+	-Good for dictionary and problems where you need to lookup to see if it contains certain elements e.g. reverse vowels, anagrams. An array would make it more complicated
+	Advantages
+		-O(1) insert 
+		-O(1) delete (Doesnt need to search)
+		-O(1) search (Get index from hash)
+	Disadvantages
+		-Values are stored away from each other, a lot of mem cache misses
+		-Resizing costs the same as Array, need to copy over to new array with larger size
+
+Linked List
+	-Uses Node Objects to store the value and reference
+	-Often used as stack and queue
+	-Good if you add/delete in the middle since it doesnt require resizing like hash and array
+	Advantages
+		-Has a tail and head pointer for O(1) AddFirst and addLast
+		-Lookup is O(n) there is no index, has to search through each node to find where the next obj is
+	Disadvantages
+		-Takes up extra memory due to reference pointers
+
+Array
+	Advantages
+		-Benefits from mem cache, stored in the same memeory space
+		-Provides benefits when querying items next to each other, gives an innate association between closer indexed items
+	Disadvantages
+		-Costs of resizing
+
+
+CPU has cache memory
+It checks this cache before it checks the RAM
+If it isnt in the RAM then it gets it from the Harddisk
+
+	https://gamealchemist.wordpress.com/2013/05/01/lets-get-those-javascript-arrays-to-work-fast/
+	Integer addition is cheaper per operation than string manipulation and it uses less memory
+	Integer Array operations are the fastest.
+	
+	http://www.andygup.net/fastest-way-to-find-an-item-in-a-javascript-array/
+	- Create an index Array based exactly on the primary Array. It only contains names or unique ids in the same exact order as the primary. Then search for indexArray.indexOf(“some unique id”) and apply that integer against the primary Array, for example primaryArray[17] to get your result.
+
+	-Use preallocated arrays rather than push/pop.
+	-push/pop can mess up memory allocation. 
+	e.g. [1][1][2][2]
+	if push item into [1] then [x][x][2][2][1][1][1]
+	has to be reassigned because of not enough space in the memory allocation, results in 2 unused memory
+
+
+Objects allow you to always know where the value you want is. 
+Although this comes at a cost in terms of search and space, it is very minor.
+Objects allow you to keep add and remove values and not have to keep updating the array position in your code.
+This allows more modularity in terms of removing and deleting your code.
+
+NODEJS,
+Parallel call results are returned in an array. Consider parsing it in a child processor if the results are large.
+e.g. {
+	'metrics' : xxx,
+	'cow' : xxx
+} 
+vs
+[metrics,cow]
+
+var a = [0]
+
+because if metrics was removed then it would ref cow instead of metrics. 
+
+Rather than having to change it in two places, only need to change it in nodeJS and the angular will adapt 

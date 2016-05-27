@@ -1,0 +1,8 @@
+The main point of SOLID is when you want things to be modular and reduce breakage when multiple people are working on the same project. Imagine if two coders worked for two different people but they had to alter the same functions. There is a high chance of a change breaking the other person's code. You would have to label functions as do not touch. the solution is to seperate them in classes, and implement an interface. 
+
+SRP is every class should only have one purpose/one person should ask for it to change
+
+Problems arise when a class implements too many different funcionality that relies on different purposes.
+E.g. if the table display formatting and calculation were in the same function. When the manager wants to swap the table display, this will affect the calculation as it relies on an array. 
+It does not perform the calculation based on hardcoded values rather than robust paramteres instead on 
+

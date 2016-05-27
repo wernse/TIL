@@ -1,0 +1,32 @@
+#Used to import files into mongodb
+config.db.url = 'mongodb://userAdmin:test@testwernmongo.cloudapp.net:27017/test'
+```
+
+mongo --version make sure its 3.x
+mongoimport -u 'userAdmin' -p 'test' --host testwernmongo.cloudapp.net --port 27017 --authenticationDatabase "test" --db test --collection processed --type csv --file processed.csv --headerline 
+
+```
+
+db.apples.find({'Sepal Length' : })
+{ "_id" : ObjectId("570b08841ec0e37fe037c88f"), "Sepal Length" : 4.9, "Sepal Width" : 3, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c890"), "Sepal Length" : 5.1, "Sepal Width" : 3.5, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c891"), "Sepal Length" : 4.6, "Sepal Width" : 3.1, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c892"), "Sepal Length" : 5, "Sepal Width" : 3.6, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c893"), "Sepal Length" : 5.4, "Sepal Width" : 3.9, "Petal Length" : 1.7 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c894"), "Sepal Length" : 4.6, "Sepal Width" : 3.4, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c895"), "Sepal Length" : 5, "Sepal Width" : 3.4, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c896"), "Sepal Length" : 4.4, "Sepal Width" : 2.9, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c897"), "Sepal Length" : 4.9, "Sepal Width" : 3.1, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c898"), "Sepal Length" : 5.4, "Sepal Width" : 3.7, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c899"), "Sepal Length" : 4.8, "Sepal Width" : 3.4, "Petal Length" : 1.6 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89a"), "Sepal Length" : 4.8, "Sepal Width" : 3, "Petal Length" : 1.4 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89b"), "Sepal Length" : 4.3, "Sepal Width" : 3, "Petal Length" : 1.1 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89c"), "Sepal Length" : 5.8, "Sepal Width" : 4, "Petal Length" : 1.2 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89d"), "Sepal Length" : 5.7, "Sepal Width" : 4.4, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89e"), "Sepal Length" : 5.4, "Sepal Width" : 3.9, "Petal Length" : 1.3 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c89f"), "Sepal Length" : 5.1, "Sepal Width" : 3.8, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c8a0"), "Sepal Length" : 5.1, "Sepal Width" : 3.7, "Petal Length" : 1.5 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c8a1"), "Sepal Length" : 4.6, "Sepal Width" : 3.6, "Petal Length" : 1 }
+{ "_id" : ObjectId("570b08841ec0e37fe037c8a2"), "Sepal Length" : 5.1, "Sepal Width" : 3.3, "Petal Length" : 1.7 }
+
+mongoexport -u 'userAdmin' -p 'test' --host testwernmongo.cloudapp.net --port 27017 --authenticationDatabase "test" --db test --collection cow --out Sales_CP_clean.csv

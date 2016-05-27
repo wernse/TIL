@@ -1,0 +1,7 @@
+docker run -it -p 80:8080 --name tmpnode --link ocpu basenode /bin/bash
+git clone https://github.com/wernse/basketool
+
+
+docker run -w /basketool -p 80:8080 -d --name basketool --link ocpu basketool
+//-w sets the working dir to /basketool, where npm start executes
+//without -w it wont change to the correct directory

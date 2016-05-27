@@ -1,0 +1,5 @@
+Netflix users Immutable servers
++Provide a clean config so you alwasys know what the config is,
+config normally changes as you change things on the server, dont want unknowns when delopying
+e.g. did i add another package to server.conf preload or did i forget to add it to the docker image im deploying
+-Takes a while to spin up completely new vm stack when redelopying all your server on new code push.

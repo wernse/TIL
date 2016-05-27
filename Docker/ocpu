@@ -1,0 +1,23 @@
+SETUP - CMD LINE in CONTAINER
+docker run -it --name ocpu wernsen/ocputest /bin/bash
+
+docker run -it --name node wernsen/basenode /bin/bash
+
+
+PRELOAD PACKAGES
++does not need to load into library every function run
+
+nano /etc/opencpu/server.conf
+
+"rlimit.as": 3.8e9,//changes to 3.8gb
+"rlimit.fsize": 1e9,//1gb max file size
+"rlimit.nproc": 50,
+
+"preload": ["MASS","reshape2", "stringr", "scales", "RcolorBrewer",
+ "dichromat", "munsell", "colorspace",
+ "labeling", "proto", "assertthat", "R6",
+ "magrittr", "lazyeval", "DBI", "BH", "ggplot2",
+ "lattice", "arules", "dplyr", "gridExtra", "Rcpp", "digest", "gtable",
+ "base64enc", "gtools", "gdata", "caTools", "gplots","Matrix"]
+
+

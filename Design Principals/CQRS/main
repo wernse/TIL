@@ -1,0 +1,12 @@
+#Command Query Responsibility Segregation
+http://martinfowler.com/bliki/CQRS.html
+http://codebetter.com/gregyoung/2010/02/16/cqrs-task-based-uis-event-sourcing-agh/
+
+The mainstream approach is the CRUD datastore. 
+
+The main idea is to handle reads and writes seperately
+There should be independant models for each so it isnt coupled.
+Seperate apis for each. Allows seperation and decoupling for validation
+
+Using CQRS on a domain that doesn't match it will add complexity, thus reducing productivity and increasing risk.
+CQRS allows you to separate the load from reads and writes allowing you to scale each independently. If your application sees a big disparity between reads and writes this is very handy. 

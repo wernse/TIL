@@ -1,0 +1,9 @@
+Remove All Containers
+ docker rm $(docker ps -a -q)  
+
+View Containers
+ docker ps -a
+ docker rm -f <id> 
+General Commands
+ docker images
+ docker rmi -f <id>

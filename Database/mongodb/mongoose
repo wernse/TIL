@@ -1,0 +1,22 @@
+This is a library that imposes restrictions on the database through a schema.
+Just maps the data into a json object.
+You can only perform operations that are defined.
+Prevents adding fields that you didnt account for.
+
+
+#Mongoose Schema on the Fly
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema; // <-- EDIT: missing in the original post
+var Comments = new Schema({
+    title     : String
+  , body      : String
+  , date      : Date
+});
+mongoose.model("Comments", Comments);
+
+##In other files
+var mongoose = require('mongoose');
+var Comments = mongoose.model("Comments");
+Comments.find(function(err, comments) {
+    // some code here
+});

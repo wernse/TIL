@@ -1,0 +1,347 @@
+https://docs.mongodb.org/master/MongoDB-aggregation-guide-master.pdf
+db.iris1448937343175.csv.drop()
+db.iris1448930556898.csv.find()
+show collections
+db.reports.distinct("_id")
+
+#Remove
+db.apples.remove({})
+
+##entire collection
+db.apples.drop()
+
+#Equality
+
+##Greater than
+db.apples.find({'Sepal Length': {$gt:5}})
+
+##Range
+db.apples.find( { 'Sepal Length': { $gt: 4, $lt: 4.7 } } );
+
+#Map/filter - reformats the data into new array
+db.books.aggregate( [ { $project : { _id: 0, title : 1 , author : 1 } } ] )
+	isbn: "0001122223334",
+isbn: {
+prefix: { $substr: [ "$isbn", 0, 3 ] },
+group: { $substr: [ "$isbn", 3, 2 ] },
+publisher: { $substr: [ "$isbn", 5, 4 ] },
+title: { $substr: [ "$isbn", 9, 3 ] },
+checkDigit: { $substr: [ "$isbn", 12, 1] }
+},
+
+#Get Count
+{$group: { _id : null, count: {$sum:1}}}
+
+#Where
+db.website.aggregate({ $match : {hosting : "aws.amazon.com"}}
+
+#What to Return
+## 0 = exclude, 1 = include
+db.apples.find( { 'Sepal Length': { $gt: 4, $lt: 4.7 }}, { _id: 0,'Sepal Length': 1, 'Petal Length': 1 } )
+
+#Chaining steps into a pipeline - Top Items
+db.apples.aggregate([
+    // First sort all by sepal length. -1 = reverse
+    {$sort: {'Sepal Length': -1}},
+    // Take the first 10 of those. Good for memory, only maintains the limit amount
+    {$limit: 10},
+])
+
+#Get top items from transaction Data
+https://docs.mongodb.org/manual/reference/operator/aggregation/group/
+```
+db.no8.aggregate(
+   [
+	    {//group the items by distinct Description
+		    $group: { 
+		       _id: "$Description", //$Description shows its a variable, wildcard, loops thru.
+		       count: { $sum : '$Quantity'}, //get value from wildcard then sum
+		       sales: { $sum: { $multiply: [ "$Quantity", "$Price" ] } }, //multiply then sum
+		    }  
+	    },
+	    {$sort: {'count': -1}},
+	    {$limit: 10},
+   ]
+)
+```
+
+#Cleaner way of layout
+db.runCommand( 
+    {
+    "aggregate": "no8" , 
+    "pipeline": pipeline
+    }
+);
+
+pipeline = 
+[
+    {//group the items by distinct Description
+	    $group: { 
+	       _id: "$Description", //$Description shows its a variable, wildcard, loops thru.
+	       count: { $sum : '$Quantity'}, //get value from wildcard $sum
+	       sales: { $sum: { $multiply: [ "$Quantity", "$Price" ] } }, //multiply then sum
+	    }  
+    },
+    {$sort: {'count': -1}},
+    {$limit: 10},
+]
+
+##Rename a field
+db.no8.update( {}, { $rename: { "Quantitys": "Quantity" } } )
+
+#Update a value
+db.accounts.update( {username:"admin"}, { $set: { "level": 0 } })
+
+#Rename all fields
+db.no8.update( {}, { $set: { "Quantitys": db.events.Quantity } } , { multi: true })
+
+#Sum all elements
+
+
+db.Sales_CP_clean1460348383781.csv.aggregate(
+   [
+	    {
+		    $group: { 
+			    _id: null,//like a loop if null
+			    total_items_sold: { $sum: "$quantity_column" },
+			    total_sales :  { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+			}  
+	    },
+
+   ])
+
+//Get total number of trans
+http://stackoverflow.com/questions/11782566/mongodb-select-countdistinct-x-on-an-indexed-column-count-unique-results-for
+db.Sales_CP_clean1460348383781.csv.aggregate( 
+   {$group : {_id : "$transaction_column"} }, //this performs a double grouping. first group unique trans
+   {$group : {_id:null, count: {$sum : 1 }}}//loops through input and sums
+   ); 
+
+db.Sales_CP_clean1460348383781.csv.aggregate(
+   [
+	    {
+		      $group: { //groups by id and sums the values with the same id
+			    _id : "$transaction_column",
+			    trans_basket_val : { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+			    trans_basket_size : { $sum: "$quantity_column"},
+			    trans_avg_item_price : { $avg: "$dollar_column" },
+			}    
+	    },
+	    {
+	    	$group : {
+	    	_id:null, 
+	    	total_trans: {$sum : 1 },
+	    	avg_item_price: {$avg: "$trans_avg_item_price"},
+	    	avg_basket_size: {$avg: "$trans_basket_size"},
+	    	avg_basket_val: {$avg: "$trans_basket_val"},
+	    	}
+	    }
+
+   ])
+
+db.Sales_CP_clean1460348383781.csv.aggregate(
+  [
+	    {
+		    $group: { //groups by id and sums the values with the same id
+			    _id : "$transaction_column",
+			    trans_basket_val : { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+			    trans_basket_size : { $sum: "$quantity_column"},
+			    trans_avg_item_price : { $avg: "$dollar_column" },
+			}  
+	    },
+
+  ])
+
+db.Sales_CP_clean1460348383781.csv.aggregate(
+  [
+	    {
+		    $group: { 
+			    _id : "$time_column",//the criteria for the group e.g {'name' + 'lastname'}
+			    unit_sales : { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+			    sales : { $sum: "$quantity_column"},
+			}  
+	    },
+
+  ])
+
+db.Sales_CP_clean1460348383781.csv.aggregate(
+  [
+  	{
+	    $group: {
+	    //match on the values that will always stay the same
+		    _id : {
+		    	transaction_column:"$transaction_column",
+		    	day_of_week :"$day_column",
+		    	time_of_day :"$time_column",
+		    }, 
+	    //these values outside are derived from the grouping
+		    basket_size : { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+		    number_of_items : { $sum: "$quantity_column"},
+		    avg_item_price : { $avg: "$dollar_column" },
+		}
+	}
+
+
+  ])
+
+use $out to create a new collection. will be used for the transformed transactions.
+faster than forEach as it prevents the sending of info to and from server
+#Create data2 store in new collection
+
+//1.Group by transactions
+//2.Create data2 with avg item price, if refund then take positive item price, if 0 then 0
+db.processed.aggregate(
+{$group: {
+_id : "$transaction_column",
+basket_val : { $sum: { $multiply: ["$dollar_column", "$quantity_column"]}},
+day_of_week :{ $first : "$day_column" },
+time_of_day :{ $first : "$time_column" },
+number_of_items : { $sum: "$quantity_column"},
+avg_item_price : { $avg: "$dollar_column" },
+}},
+{$project:{
+basket_val:1, 
+day_of_week:1, 
+time_of_day:1, 
+number_of_items:1,
+avg_item_price:{ $cond: [ { $eq: ["$number_of_items", 0] }, 0, { $divide: [ "$basket_val", "$number_of_items" ]}] }
+}},
+{ $out : "processedData2" }
+)
+
+*{ "_id" : 168801097, "basket_val" : 1, "avg_item_price" : 1, "day_of_week" : "Wednesday", "time_of_day" : 7, "number_of_items" : 1 }
+
+#Get transaction metrics
+   db.processed.aggregate(
+   {$group : {
+   _id : null, 
+   no_of_items: {$sum : "$quantity_column" },
+   sales: {$sum : { $multiply : ["$dollar_column", "$quantity_column"] }},
+   }}
+   )
+*{ "_id" : null, "no_of_items" : 137533, "sales" : 1049984.779999803 }
+
+
+#Get basket metrics
+   db.processedData2.aggregate(
+   {$group : {
+   _id : '$transaction_column', 
+   no_of_trans: {$sum : 1},
+   avg_basket_value: {$avg : "$basket_val"},
+   avg_basket_size: {$avg : "$number_of_items"},
+   avg_item_price: {$avg : "$avg_item_price"}
+   }}
+   )
+
+
+
+#Get Weekday graphs
+#{$sum:1} Group all then the $sum is the trans within that group
+   db.processed.aggregate( 
+   {$group : {
+   _id : "$day_of_week", 
+   no_of_trans: {$sum : 1 },
+   no_of_items: {$sum : "$number_of_items" },
+   sales: {$sum : "$basket_val"}
+   }}
+   )
+
+*{ "_id" : "Wednesday", "no_of_trans" : 11186, "no_of_items" : 19690, "sales" : 157534.3499999994 }
+*{ "_id" : "Tuesday", "no_of_trans" : 11363, "no_of_items" : 19576, "sales" : 151160.97999999856 }
+
+#Get hourly graphs
+#{$sum:1} Group all then the $sum is the trans within that group
+   db.test.aggregate( 
+   {$group : {
+   _id : "$time_of_day", 
+   no_of_trans: {$sum : 1 },
+   no_of_items: {$sum : "$number_of_items" },
+   sales: {$sum : "$basket_val"}
+   }},
+   {$sort: {'_id': 1}}
+   )
+
+*{ "_id" : 0, "no_of_trans" : 3548, "no_of_items" : 6182, "sales" : 46904.79999999999 }
+*{ "_id" : 1, "no_of_trans" : 3253, "no_of_items" : 5747, "sales" : 42393.13999999999 }
+
+
+
+@{ "_id" : ObjectId("570c78e11ec0e37fe03b9ac4"), "date_id" : 1, "transaction_column" : 168005785, "date_column" : 16679, "item_column" : "Lipton I/Tea Green Original 500Ml", "sub_cat_column" : "Fruit Drinks", "cat_column" : "HARDWALL BEVERAGES", "dollar_column" : 4.39, "cost_column" : 1.961, "day_column" : "Tuesday", "time_column" : 0, "quantity_column" : 1 }
+
+
+#Get top items
+db.Sales_CP_clean1460348383781.csv.aggregate(
+{$group: { 
+_id : "$cat_column",
+count : { $sum: '$quantity_column' },
+sales : { $sum: '$dollar_column'},
+}},
+{$sort : {'sales' : -1}},
+{$limit: 20},
+{$project : {
+_id : 0, 
+name: '$_id', 
+count : 1 ,
+sales : 1
+}}
+)
+
+*{ "count" : 3379, "name" : "Snapper Top Up $20", "sales" : 67580 }
+*{ "count" : 3347, "name" : "Fix Small Hot Drink 8OZ", "sales" : 3347 }
+
+
+https://www.mongodb.com/blog/post/joins-and-other-aggregation-enhancements-coming-in-mongodb-3-2-part-1-of-3-introduction
+
+left outer join with data2
+//1. Filter FOOD TO GO transaction
+//2. Group on transaction_column for multiple items in a trans
+//3. Left Outer join on the formatted transaction data2
+//4. Flatten the JOIN results with unwind so it can be accessed by group
+//5.
+
+db.processed.aggregate(
+{ $match : {cat_column : "FOOD TO GO"}},
+{ $group: { 
+_id : '$transaction_column',
+}},
+{$lookup: {
+  from: "processedData2", 
+  localField: "_id",
+  foreignField: "_id",
+  as: "data2"}
+},
+{$unwind : "$data2"},
+{$sort: {'data2.basket_val' : -1}},
+{$group : {
+_id : null, 
+no_of_trans: {$sum : 1 },
+sales: {$sum : "$data2.basket_val"},
+avg_basket_value: {$avg : "$data2.basket_val"},
+avg_basket_size: {$avg : "$data2.number_of_items"},
+}}
+)
+
+db.processedData2.find({number_of_items:{ $gt: 2 }},{_id:0,basket_val:1,avg_item_price:1,number_of_items:1})
+
+db.processed.find({transaction_column:364379,},{_id:0,item_column:1,dollar_column:1,quantity_column:1})
+{ "dollar_column" : 2.5, "item_column" : "Fix Mince 200g" }
+{ "dollar_column" : 2.5, "item_column" : "V 250Ml" }
+{ "dollar_column" : 50, "item_column" : "Snapper Top UP 50" }
+{ "dollar_column" : 40, "item_column" : "Snapper Top Up 40" }
+{ "dollar_column" : 72.1, "item_column" : "Port Royal Regular 50G" }
+{ "dollar_column" : 1.5, "item_column" : "Boomerang Supa Slim 120s" }
+{ "dollar_column" : 1.1, "item_column" : "Zig Zag Papers Yellow 100s" }
+
+db.processed.aggregate(
+{
+$group: { //groups by id and sums the values with the same id
+_id : "$transaction_column",
+basket_val : { $sum:{ $multiply: ["$quantity_column","$dollar_column"]}},
+avg_item_price : { $avg: "$dollar_column" },
+day_of_week :{ $first : "$day_column" }, //first instance
+time_of_day :{ $first : "$time_column" },
+number_of_items : { $sum: "$quantity_column"},
+}    
+},
+{$sort: {'basket_val' : -1}}
+)
