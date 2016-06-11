@@ -1,0 +1,52 @@
+http://www.entityframeworktutorial.net/entityframework6/code-first-insert-update-delete-stored-procedure-mapping.aspx
+http://www.asp.net/mvc/overview/getting-started/getting-started-with-ef-using-mvc/async-and-stored-procedures-with-the-entity-framework-in-an-asp-net-mvc-application
+http://stackoverflow.com/questions/59880/are-stored-procedures-more-efficient-in-general-than-inline-statements-on-mode
+Pre-parsed sql query in the cache
+    +makes a difference when you send a SQL statement millions of times(vomplied vs interpreted code)
+Pre-generated query exection plan
+    Tries to optimize for the best execution plan(many Joins)
+    The DBMS will try cache these plans and reduce the time to optimize
+    +Will store the plan in the procduce removing the overhead
+    -Risk of creating a cache plan that will be worse(Select from table where id between 1 and 100000) will tell plan to query whole table
+    This will cause a subsequent query (select from table where id between 1 AND 2) to not use indexs and get whole table
+Reduced network latency
+    Moves the code to the DBMS, able to call with exec foo
+    +SQL code is in DBMS rather than transmitted over the network. reduces network transfer 1gb vs 10gb
+Parameterized SQL
+    Can put wildcards/paramteres in your SQL query that can adapt to different inputs
+    Able to use query exectuion plan and parsed sql
+    e.g. Where foo = ? AND bar = ?
+Able to find where a table is used
+    Can query the DBMS to find what stored procs ref the table instead of looking through code
+Summary
+    There isnt much difference between both if its for general operations. query optimizers are improving with Moore's law
+    Use Sytanx sugar for easy development then can improve bottlenecks
+
++Good for bulk retrieving info with a single call e.g. get all metrics and basket for dashboard
+vs having to make multiple trips 
+
+-Have to generate a new stored procedure every time you change your application
+-Heavily coupled with your db model, always have to update the procedure e.g. getAll API
+
+http://stackoverflow.com/questions/9739230/entity-framework-vs-stored-procedures-performance-measure
+Think of the MVC-ORM solution this way. Person "A" is knowledgeable of facts only and person "B" has all the savvy to make decisions with given facts which he does not poses. Person "B" emails "A" for facts. Based on the answer from "A", "B" might request a few more facts before making a decision
+
+https://entityframework.codeplex.com/wikipage?title=Code%20First%20Insert%2fUpdate%2fDelete%20Stored%20Procedure%20Mapping
+You cannot use a mixture of stored procedures and direct table access for a given entity (or entity hierarchy). The insert, update and delete operations must all use direct table access or stored procedures.
+
+http://objectreference.net/scope_identity-return-the-id-from-the-database-on-insert/
+CREATE PROCEDURE [dbo].[Customer_Insert]
+    @Name VARCHAR(255),
+    @Email VARCHAR(255),
+    @Phone VARCHAR(255),
+    @CustomerID INT OUTPUT
+AS
+BEGIN
+    INSERT INTO dbo.Customer ([Name], Email, Phone)
+    VALUES (@Name,@Email,@Phone)
+
+    SET @CustomerID = CAST(SCOPE_IDENTITY() AS INT)
+END
+
+This inserts a customer into DB then if we want to retrieve the Id from the insertion we use scope_identity
+If we try to find it using a WHERE [Name] = @Name AND Email = @Email AND Phone = @Phone then it could find a different person
