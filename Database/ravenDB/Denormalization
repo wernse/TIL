@@ -1,0 +1,35 @@
+Can use document relationships e.g. order, customer, items
+Able to hold fields that relate to order. E.g customer will show address and name but not
+password or gender. However if we need to update address, need to update all orders rather than
+a single customer document
+
+Able to also eager load certain documents into the session cache
+Loads all GUIDs dependencies into the session cache
+
+Order order = session
+	.Include<Order>(x => x.CustomerId)//include the customer document from order.customerId
+	.Load("orders/1234");//load order/1234
+
+// Retrieve customer from orders/1234 that is stored from the include, doesnt query server
+Customer customer = session
+	.Load<Customer>(order.CustomerId);
+
+
+IList<Order> orders = session
+	.Query<Order, Orders_ByTotalPrice>()
+	.Customize(x => x.Include<Order>(o => o.CustomerId))//Can use include in query to eager load
+	.Where(x => x.TotalPrice > 100)
+	.ToList();
+
+foreach (Order order in orders)
+{
+	// this will not require querying the server!
+	Customer customer = session
+		.Load<Customer>(order.CustomerId);
+}
+
+e.g. need to work on it
+IList<Schedule> schedules = session
+	.Query<Schedule, Orders_ByTotalPrice>()
+	.Customize(x => x.Include<Schedule>(o => o.TaskId))//Can use include in query to eager load
+	.ToList();

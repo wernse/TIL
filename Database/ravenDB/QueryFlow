@@ -1,0 +1,59 @@
+1. When query is executed, find the index. If index found use it, else auto-index
+2. Scan records to match query predicate
+3. From each record server, get correct fields
+4. Load document from storage, if fields are in index then load from index
+   and get rest from document in storage
+
+Index Example
+ public class Orders_ByStoredProductName : AbstractIndexCreationTask<Order>//creates an index
+    {
+        public class Result
+        {
+            public string Product { get; set; } 
+        }
+
+        public Orders_ByStoredProductName()
+        {
+            Map = orders => from order in orders
+                            from line in order.Lines
+                            select new Result
+                            {
+                                Product = line.ProductName
+                            };
+
+            MaxIndexOutputsPerDocument = 1024;
+        }
+    }
+//returns a list - for each order it returns a product. resulting in a list of Products
+results = session
+    .Query<Orders_ByStoredProductName.Result, Orders_ByStoredProductName>()
+    .Select(x => x.Product)
+
+
+Filtering 
+    // load up to 128 entities from 'Employees' collection
+    // where 'FirstName' is 'Robert'
+    IList<Employee> results = session
+        .Query<Employee>()//no index specified auto-create
+        .Where(x => x.FirstName == "Robert")
+        .ToList(); // send query
+
+Paging
+    / load up to 10 entities from 'Products' collection
+    // where there are more than 10 units in stock
+    // skip first 5 results
+    IList<Product> results = session
+        .Query<Product>()//no index specified auto-create
+        .Where(x => x.UnitsInStock > 10)
+        .Skip(5)
+        .Take(10)
+        .ToList(); // send query
+
+Query using index
+    // load up to 128 entities from 'Employees' collection
+    // where 'FirstName' is 'Robert'
+    // using 'Employees/ByFirstName' index
+    IList<Employee> results = session
+        .Query<Employee, Employees_ByFirstName>()
+        .Where(x => x.FirstName == "Robert")
+        .ToList(); // send query

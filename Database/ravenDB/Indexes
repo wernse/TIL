@@ -1,0 +1,24 @@
+Indexes are server-side functions that defined what documents can be searched(Rather than searching all)
+RavenDB uses a background thread that uses the old data to respond even if new data is coming in.
+Allows concurrent updates rather than locking the db. Updates as soon as possible
+The results returned may not be on the latest but is quick(tradeoff of time and most up to date) 
+e.g.
+Map = employees => from employee in employees
+    select new
+    {
+        FirstName = employee.FirstName,
+        LastName = employee.LastName
+    };
+
+Have to send the function to db to tell it that only employees are used
+new Employees_ByFirstAndLastName().Execute(store);
+//async 
+await new Orders_Totals().ExecuteAsync(store.AsyncDatabaseCommands, store.Conventions);
+
+Then you are able to query it 
+IList<Employee> results = session
+	.Query<Employee, Employees_ByFirstAndLastName>()
+	.Where(x => x.FirstName == "Robert")
+	.ToList();
+
+Its like caching the query on the db so it knows what json object stores to use

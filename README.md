@@ -2,7 +2,15 @@
 TIL
 
 #To-do-list
--Integrate mongoimport with OCPU CSV cleaning upload->requestcsv->mongoimport->create schema
--Learn more Mongo
--Learn Tests
--Move more code into directives
+helping companies
+do things this way
+im a builder looking for projects
+build anything and everything
+
+Im free now, anyone wanna build anything
+
+##Front-end
+    BEM
+    SMACSS 
+    OOCSS
+    ES6 

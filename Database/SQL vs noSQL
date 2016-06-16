@@ -1,0 +1,41 @@
+NoSQL is an alternative to SQL not a replacement
+Choose the right tool for the job rather than only the hammer
+
+SQL
++Good for speeding up queries with indexing
+*Uses Tables that store Rows
+*Requires a schema with primary keys, indexes and table relationships 
+-Rigid design, cant store different information in a table. e.g. string where int is expected
++Strict rules so difficult to make a mistake
+
+NOSQL
++Good for projects where inital data requirements are unknown.
+*Uses Collections that store Documents(Json obj)
+*Schemaless
++Built with scalability in mind, docs unrelated to other clusters. 
++Adaptive, can store anything you like inside the json obj.
+-Consistency issues if different jsons have different fields
++All or nothing(ATOMIC) operations, all 3 updates work or none
+
+SQL - Has Join, to only return books with the respective authors. leaving out un-needed authors
+NoSql - No Join, needs to get all books and all authors and join manually. This is why denormalization is used
+
+
+Normalization vs denormalization
+Normalization is reducing repeated information e.g. rather than repeating author details
+in the book table, abstract it out and include author keys
++Faster updates, reduces the amount of rows to be updated, can update the single key its refd to
++
+-Slower queries, It costs to join the tables back together to find book's authors
+
+Projects where SQL is ideal:
+
+-logical related discrete data requirements which can be identified up-front
+-data integrity is essential
+-standards-based proven technology with good developer experience and support.
+
+Projects where NoSQL is ideal:
+
+-unrelated, indeterminate or evolving data requirements
+-simpler or looser project objectives, able to start coding immediately
+-speed and scalability is imperative.

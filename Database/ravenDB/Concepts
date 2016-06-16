@@ -1,0 +1,33 @@
+DocumentStore - Object that holds the connection string and specifies defaultDB 
+e.g like mongodb connect to 'mongodb://pw:username@serverURL:27017/test'
+
+Session - Open connection to db then perform operations
+e.g. using (IDocumentSession session = store.OpenSession())
+-Session implements Unit of Work pattern
+  This pattern chaches db changes to send in one go instead of each individually, bulk update reduces the trips to DB, 
+  if item is in memory then it will retrieve from memory not the db. e.g. save and load same obj
+
+Store and Load Entities - Need a class("json") to retrieve entities.
+
+var newReport = new report();
+newReport.array = cleanedData
+newReport.save()
+
+vs
+
+//creating a json structure like mongoose. Employee is the predefined "schema"
+Employee employee = new Employee
+{
+    FirstName = "John",
+    LastName = "Doe"
+};
+
+session.Store(employee); // stores employee in session, assigning it to a collection `Employees` 
+string employeeId = employee.Id; // Session.Store will assign Id to employee, if it is not set
+
+//returns a report json
+report.findOne({ _id : req.body.hash}, function(err, thisReport) {
+
+vs
+//returns an employee json loaded as employee object
+Employee loadedEmployee = session.Load<Employee>(employeeId);
