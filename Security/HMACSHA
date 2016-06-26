@@ -1,5 +1,9 @@
+http://stackoverflow.com/questions/17576007/generate-a-strong-hmacsha256-key-in-c-sharp
+http://security.stackexchange.com/questions/20129/how-and-when-do-i-use-hmac/20301
+http://crypto.stackexchange.com/questions/12680/how-does-the-secret-key-in-an-hmac-prevent-modification-of-the-hmac
 HMAC - Hashed message authentication code
 
+You use HMAC whenever you want integrity of the data maintained (and authenticity)
 Only requires secret key to ensure authentication
 Used to ensure the message was not altered in between or by unauthorized party
 Good for surveys where you have to link a url and cant add headers

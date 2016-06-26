@@ -1,0 +1,13 @@
+https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+
+Used for access to user information on another server's API e.g. linkednn/facebook/googleacc
+Getting their information, automatic logins without having to create a login
+
+1.App requests auth to access resources from user
+2.User authorizes the request for access and passes auth token
+3.App requests access token from the auth server with auth token and app ID
+4.If auth token and app ID are valid then pass access token
+5.App can request from API with the access token
+6.If valid then request access token
+
+*access tokens have a valid life, can get a refresh token with access token
