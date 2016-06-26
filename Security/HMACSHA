@@ -1,0 +1,18 @@
+HMAC - Hashed message authentication code
+
+Only requires secret key to ensure authentication
+Used to ensure the message was not altered in between or by unauthorized party
+Good for surveys where you have to link a url and cant add headers
+
+*Requires shared secret key for trusted parties
+*Hashes the message/data/url params with secret key
+*Sends this as param with encoded msg e.g. ?stockNumber=1&survey=1&key=k3ja34ipa34pij3a4
+*Can check if its authentic by running HMAC on the message and comparing it with the key provided
+
+-If secret key compromised then messages then security breached
++Does not require DB/previous info to ensure message is authentic
++More secure then only auth on a shared secret, untrusted person can access any survey 
+
+query parameter is less preferred since it may end up in logs and system process information, 
+available to others that have access to the server or client system. 
+In that case would be better to present it as part of a header or a POST parameter.

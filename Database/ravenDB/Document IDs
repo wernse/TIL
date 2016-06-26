@@ -1,0 +1,43 @@
+
+https://ravendb.net/docs/article-page/3.0/csharp/client-api/document-identifiers/working-with-document-ids
+Raven uses a HiLo algorithm to assign document Ids
+-If the Id is not present or null in the object  it will use HiLo
+    Order order = new Order
+    {
+        Id = null // value not provided or missing
+    };
+
+HiLo
+    -Its an algorithm that takes into account concurrency when calculating Ids
+    -Want multiple clients to use the DB without having conflicting Ids
+    +Allows SaveChange to be called at the end of the Unit of Work, all changes can be efficiently batched
+    into a single request.
+    +Id generation on client rather than having to go to the server and retrieving the highest value that may not be valid.
+    e.g. insert -> go find max id from db -> insert and repeat
+
+    if another client inserts into the db
+    1. Client gets HiLo doc with 'Max' value
+    2. Adds a Capacity value to it(exclusive ids to that client)
+    3. Updates the doc with new Max value in db
+    4. If someone else updates this document concurrently then has to go get new Max from db
+
+    E.g. if capacity was 32 then the client will be able to use Ids 1-32 during that session
+    Step 4 prevents the case where two clients access db at same time and end up having
+    the same 'Max' value thus conflicting Ids when changing/inserting into db.
+
+    Info: This happens every session connection. There will be gaps of unused Ids however only humans care about it
+    Problem: Bulk Import - Needs to get and edit the HiLo for the Max to ensure theres enough Ids, Capacity increases per req 
+    Typical: Typically you only need to insert one of two documents per session so this is a better way.
+
+Able to skip the HiLo algorithm if you want sequential Ids(more human readable, doesnt matter for db)
+    session.Store(new Company()
+    {
+        Id = "companies/"
+    });
+Same result as Hilo but this will generate the keys on the server side rather than on the client.
+Problem is that client has to wait for objects to save before it can use the clientId(blocking)
+Calling SaveChanges will need to return the Ids which is expensive, if client already knows through
+HiLo algorithm what the Ids will be then it can skip this step.
+
+*You should never mix the identity key generation strategy with the auto-generated identifiers based on the HiLo algorithm within the same session. You might run into concurrency issues.
+

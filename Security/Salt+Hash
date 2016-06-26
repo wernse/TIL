@@ -1,0 +1,12 @@
+For passwords
+
+Uses one way hashing algorithms to prevent password security being compromised
+
+-Problem is that MD-5 and SHA can be reverse engineered through dictionary lookups
+People run these algorithms on every letter combination to find the hashed password
+*Able to google the hash to find the unhashed value
+
+Adding salt(random string) to the hashed value then hashing again will make it harder
+Will need to find the unhashed (pw-hashed + salt) then unhash again. 
+Even if salt is compromised it will still be difficult to lookup unhashed as they cant 
+use the salt to unhash(one-way hashing)
