@@ -1,3 +1,7 @@
+  http://blog.stephencleary.com/2012/02/async-and-await.html
+  http://blog.stephencleary.com/2013/08/startnew-is-dangerous.html
+  http://stackoverflow.com/questions/6123406/waitall-vs-whenall
+  http://stackoverflow.com/questions/9519414/whats-the-difference-between-task-start-wait-and-async-await
             Task[] tasks = new Task[3];
             tasks[0] = CalculateAnswer();
             tasks[1] = CalculateAnswer();
