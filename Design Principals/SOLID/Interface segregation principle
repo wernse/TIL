@@ -1,0 +1,5 @@
+Make interfaces small so you dont have to implement unneeded features,
+can break down big interfaces into small ones and implement many to remove this problem
+Many cliend specific interfaces are better than a general one
+
+Removes the need for a stapler job would need to implement print job functions

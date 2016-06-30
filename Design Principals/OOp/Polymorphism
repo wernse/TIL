@@ -1,3 +1,5 @@
 Ploymorphism is to distinguish based on the object's type
 
-+Can call a method of an object and it will call it based on that object's type. e.g. a square and rectangle will have different implementations of the same method. Calling one will call a different implementation that the other.
++Can call a method of an object and it will call it based on that 
+object's type. e.g. a square and rectangle will have different implementations 
+of the same method. Calling one will call a different implementation that the other.

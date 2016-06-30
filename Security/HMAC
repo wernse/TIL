@@ -1,7 +1,16 @@
 http://stackoverflow.com/questions/17576007/generate-a-strong-hmacsha256-key-in-c-sharp
 http://security.stackexchange.com/questions/20129/how-and-when-do-i-use-hmac/20301
 http://crypto.stackexchange.com/questions/12680/how-does-the-secret-key-in-an-hmac-prevent-modification-of-the-hmac
+http://crypto.stackexchange.com/questions/6523/what-is-the-difference-between-mac-and-hmac
+MAC -  message authentication code
 HMAC - Hashed message authentication code
+
+MAC is a string of bits sent with message(message hashed with private key) to ensure a person
+with the secret key(trusted) actually sent it
++significantly faster than HMAC
+-lower security, hash can be found and mocked(salt+hash vs hash)
+
+HMAC is a recipe for turning hash functions(SHA256/MD5) into MACs
 
 You use HMAC whenever you want integrity of the data maintained (and authenticity)
 Only requires secret key to ensure authentication

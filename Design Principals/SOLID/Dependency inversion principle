@@ -1,0 +1,7 @@
+High level modules(functions) should not depend on low-level modules, they should depend on 
+abstractions(interfaces).
+Low level should depend on an input interface.
+High level should depend on an output interface
+Given an input, i expect this output. Therefore can swap the low and high modules out
+without having to go into each function to change functionality e.g. SQL vs NOSQL
+Or low level shouldnt know that high level is a mobile vs webapp

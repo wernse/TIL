@@ -1,0 +1,10 @@
+Open for extension, closed for modification if used by other modules(well-defined).
+New functionality/features should extend from the original class,
+not through modifiying the original class.
+
+For example, if people rely on the original class for an API and test cases
+If you implement the new functionality in the original class then it may break the original test
+cases and the APIs people rely on.
+
+Better to extend the class or get the results and then extend to create 
+a new api or functionality

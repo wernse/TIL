@@ -1,0 +1,46 @@
+            Task[] tasks = new Task[3];
+            tasks[0] = CalculateAnswer();
+            tasks[1] = CalculateAnswer();
+            tasks[2] = CalculateAnswer();
+            //when it hits an await, the caller will continue running
+            //good for button colour func change, doesnt block the ui thread(caller). will only update colour after button func is finished
+            //good for unrelated processors. use task.WhenAll when needing to get the results before moving on
+
+            //await it like a callback
+            //then execute the remaining of the function/context
+            //await can only run on a task or task<type>
+            await Task.WhenAll(tasks);
+
+            int k = await CalculateAnswer();
+
+            Task<int> taskA = Task.Run(() => CalculateAnswer());
+            int asdasd = await taskA;
+
+            Task<int> taskB = await Task.Factory.StartNew(() => CalculateAnswer());
+            int asdasdasd = taskB.Result;
+
+            Task[] taskss = new Task[10];
+            for (int i = 0; i < 10; i++)
+            {
+                tasks[i] = Task.Run(() => CalculateAnswer());
+                //Run is a sync wrapper for Factory.startnew, startnew allows you to specify a custom task scheduler instead of threadpool. Startnew runs on the thread that picks it up
+                //May result in blocking the UI thread instead of being on the threadpool
+
+                //Run simply offloads some work to be processed on the ThreadPool by passing in default params into StartNew, automatic thread pool scheduler setup
+                //tasks[i] = Task.Factory.StartNew(() => CalculateAnswer());
+
+            }
+            //waitAll vs async WhenAll
+            //waitAll will block until the tasks are done
+            //async WhenAll will return control to caller then execute the remaining context when tasks are finished
+            Task.WaitAll(tasks);
+        }
+
+        //method doesnt have to be async, can just be a long calcuilation
+        public async Task<int> CalculateAnswer()
+        {
+            await Task.Delay(1000); // (Probably should be longer...)
+
+            // Return a type of "int", not "Task<int>"
+            return 42;
+        }

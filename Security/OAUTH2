@@ -1,4 +1,9 @@
 https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+http://security.stackexchange.com/questions/39787/security-for-rest-api-user-pass-auth-vs-hmac-vs-oauth
+
+Standard for authorization whose main use case is managing authentication of users without sharing credentials 
+e.g. login
+Our app trusts facebook auth server, user doesnt need to ever enter password to our app
 
 Used for access to user information on another server's API e.g. linkednn/facebook/googleacc
 Getting their information, automatic logins without having to create a login
