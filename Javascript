@@ -1,1 +1,43 @@
+`Hoisting`
+https://hacks.mozilla.org/2015/07/es6-in-depth-let-and-const/
+
+var, function
+Imagine a tiny crane hoisting these declarations to the top of the function
+
+e.g.
+function runTowerExperiment(tower, startTime) {
+  var t = startTime;
+
+  tower.on("tick", function () {
+    ... code that uses t ...
+    if (bowlingBall.altitude() <= 0) {
+      var t = readTachymeter();
+      ...
+    }
+  });
+  ... more code ...
+}
+
+-The inner t will be hoisted to the top and override 't = startTime',
+the inner function will now use 'var t = readTachymeter();' rather than 't = startTime'
+
+tower.on("tick", function () {
+    var t = readTachymeter();//hosited
+    ... code that uses t ...
+    if (bowlingBall.altitude() <= 0) {
+      var t = readTachymeter();
+      ...
+    }
+  });
+
+Temporal Dead Zone
+http://jsrocks.org/2015/01/temporal-dead-zone-tdz-demystified/
+let and const 
+
+console.log(x); // throws a ReferenceError
+let x = 'hey';
+
+Will throw a ReferenceError, while a var would say its undefined. Easier to spot bugs 
+let/const declarations do hoist, but they throw errors when accessed before being initialized (instead of returning undefined as var would).
+
 
