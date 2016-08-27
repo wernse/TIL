@@ -27,6 +27,24 @@ function runTowerExperiment(tower, startTime) {
 -The inner t will be hoisted to the top and override 't = startTime',
 the inner function will now use 'var t = readTachymeter();' rather than 't = startTime'
 
+-Global let variables are not properties on the global object. 
+-let variables are block-scoped.
+    let will fix this as it is only hoisted to the top of the enclosing function(the if statement)
+-Loops of the form for (let x...) create a fresh binding for x in each iteration.
+    the variable will be created within the closure rather than sharing an outer variable
+    each closure will capture a different copy of the loop variable, rather than all closures capturing the same loop variable.
+  e.g.
+    var messages = ["Meow!", "I'm a talking cat!", "Callbacks are fun!"];
+    for (var i = 0; i < messages.length; i++) {
+      setTimeout(function () {
+        cat.say(messages[i]);
+      }, i * 1500);
+    }
+    //will print callbacks are fun since they share the same var
+-It’s an error to try to use a let variable before its declaration is reached
+  This rule is there to help you catch bugs. Instead of NaN results, you’ll get an exception on the line of code where the problem is.
+  This period when the variable is in scope, but uninitialized, is called the temporal dead zone. 
+
 tower.on("tick", function () {
     var t = readTachymeter();//hosited
     ... code that uses t ...
