@@ -14,6 +14,7 @@ Im free now, anyone wanna build anything
     SMACSS 
     OOCSS
     ES6
+    Angular2
     
 ##Angular
     Promise chaining .then(data=>{
@@ -21,3 +22,8 @@ Im free now, anyone wanna build anything
         }).then().catch()
     Resolve
         ui.route resolve data before loading the page
+        
+##Back-end
+    .Net Core + Docker
+    TypeScript
+    
