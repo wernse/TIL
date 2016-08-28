@@ -16,7 +16,7 @@ Im free now, anyone wanna build anything
     ES6
     
 ##Angular
-    Promise chaning .then(data=>{
+    Promise chaining .then(data=>{
         return Factory.getUser()
         }).then().catch()
     Resolve
