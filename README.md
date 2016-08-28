@@ -13,4 +13,11 @@ Im free now, anyone wanna build anything
     BEM
     SMACSS 
     OOCSS
-    ES6 
+    ES6
+    
+##Angular
+    Promise chaning .then(data=>{
+        return Factory.getUser()
+        }).then().catch()
+    Resolve
+        ui.route resolve data before loading the page
