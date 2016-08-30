@@ -15,6 +15,7 @@ Im free now, anyone wanna build anything
     OOCSS
     ES6
     Angular2
+    Webpack(bundler like gulp)
     
 ##Angular
     Promise chaining .then(data=>{
@@ -26,4 +27,5 @@ Im free now, anyone wanna build anything
 ##Back-end
     .Net Core + Docker
     TypeScript
+    Python - Falcon
     
