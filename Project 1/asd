@@ -1,0 +1,7 @@
+  <h3>Array of objects (sorting enabled) {{ctrl.multipleDemo.selectedPeople}}</h3>
+  <ui-select multiple ng-model="ctrl.multipleDemo.selectedPeople" theme="bootstrap"  style="width: 800px;">
+    <ui-select-match placeholder="Select person...">{{$item.name}} &lt;{{$item.email}}&gt;</ui-select-match>
+    <ui-select-choices repeat="person in ctrl.people | filter:$select.search">
+      <div ng-bind="person.name "></div>
+    </ui-select-choices>
+  </ui-select>
