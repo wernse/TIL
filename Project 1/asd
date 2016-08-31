@@ -5,3 +5,4 @@
       <div ng-bind="person.name "></div>
     </ui-select-choices>
   </ui-select>
+https://github.com/angular-ui/ui-select
