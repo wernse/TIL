@@ -28,4 +28,9 @@ Im free now, anyone wanna build anything
     .Net Core + Docker
     TypeScript
     Python - Falcon
-    
+
+##Books
+https://www.amazon.com/Badass-Making-Awesome-Kathy-Sierra/dp/1491919019 
+https://www.amazon.com/Drive-Surprising-Truth-About-Motivates/dp/1594484805/ref=sr_1_1?s=books&ie=UTF8&qid=1473206407&sr=1-1&keywords=mastery+autonomy+purpose 
+
+
