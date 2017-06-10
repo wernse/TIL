@@ -1,0 +1,35 @@
+from boto3.dynamodb.conditions import Key, Attr
+import boto3
+import json
+dynamodb = boto3.resource('dynamodb', region_name='ap-southeast-2')
+
+table = dynamodb.Table('Scraper')
+
+# title = "The Big New Movie2"
+# year = "2016"
+
+# response = table.put_item(
+#    Item={
+#         'SessionId': title,
+#         'item': year,
+#         'time': "2017/01/02"
+#     }
+# )
+# print("PutItem succeeded:")
+
+# response = table.get_item(
+#     Key={
+#         'SessionId': title,
+#     }
+# )
+# item = response['Item']
+# print("GetItem succeeded:")
+# print(item)
+
+response = table.scan(
+    FilterExpression=Attr('time').lt("2017/01/03"),
+    Limit=1
+)
+print(response)
+items = response['Items']
+print(items)
